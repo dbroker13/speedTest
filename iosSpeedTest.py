@@ -44,7 +44,7 @@ class SimpleAppiumRun(threading.Thread):
                 "headspin:selector":selector, 
                 "headspin:capture.video" : captureSession,
                 "headspin:capture.network" : captureNetwork,
-                "headspin:newCommandTimeout" : "300",
+                "headspin:newCommandTimeout" : 300,
                 "headspin:retryNewSessionFailure" : False,
                 "appium:shouldTerminateApp" : True,
                 "headspin:network.regionalRouting" : "pbox",
