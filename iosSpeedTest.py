@@ -1,9 +1,6 @@
 import json
 import requests
 from appium import webdriver
-from appium.webdriver.common.mobileby import MobileBy
-from appium.webdriver.common.touch_action import TouchAction
-from appium.webdriver.common.multi_action import MultiAction
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -11,6 +8,7 @@ import threading
 import time
 import json
 import os
+from appium.options.ios import XCUITestOptions 
 
 reportLock = threading.Lock()
 
@@ -44,7 +42,7 @@ class SimpleAppiumRun(threading.Thread):
                 "headspin:selector":selector, 
                 "headspin:capture.video" : captureSession,
                 "headspin:capture.network" : captureNetwork,
-                "headspin:newCommandTimeout" : 300,
+                "headspin:newCommandTimeout" : "300",
                 "headspin:retryNewSessionFailure" : False,
                 "appium:shouldTerminateApp" : True,
                 "headspin:network.regionalRouting" : "pbox",
@@ -52,7 +50,9 @@ class SimpleAppiumRun(threading.Thread):
         
         driver = None
         try:
-            driver = webdriver.Remote("https://appium-dev.headspin.io/v0/" + token + "/wd/hub", desired_caps)
+            options = XCUITestOptions()
+            options.load_capabilities(desired_caps)
+            driver = webdriver.Remote("https://appium-dev.headspin.io/v0/" + token + "/wd/hub", options=options)
         except Exception as e:
             print("*---------------------")
             print(e)
